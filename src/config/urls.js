@@ -2,16 +2,16 @@ import queryString from 'query-string';
 import { MEETUP_AUTH_URL, CLIENT_ID, MEETUP_REDIRECT_URI } from './constants';
 import ls from 'local-storage';
 
-export const loginURL = () =>
+export const loginURL = (uri) =>
   `${MEETUP_AUTH_URL}?${queryString.stringify({
     client_id: CLIENT_ID,
     response_type: 'token',
-    redirect_uri: MEETUP_REDIRECT_URI,
+    redirect_uri: MEETUP_REDIRECT_URI + uri,
     scope: 'basic rsvp group_content_edit ageless',
   })}`;
 
 export const commentsStreamURL = (eventId) =>
-  `ws://stream.meetup.com/2/event_comments?${queryString.stringify({
+  `wss://stream.meetup.com/2/event_comments?${queryString.stringify({
     event_id: eventId,
     access_token: ls('access_token'),
   })}`;
